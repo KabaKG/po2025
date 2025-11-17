@@ -1,3 +1,4 @@
+
 package symulator;
 
 public class Samochod {
@@ -6,6 +7,7 @@ public class Samochod {
     private Pozycja pozycja1;
     private int waga;
     private boolean wlaczony;
+    private int predkosc = 3;
 
     public Samochod(Silnik silnik, SkrzyniaBiegow skrzynia, Pozycja pozycja1, int waga) {
         this.silnik = silnik;
@@ -28,9 +30,13 @@ public class Samochod {
             System.out.println("Samochód jest wyłączony!");
             return;
         }
-        this.pozycja1 = cel;
-        System.out.println("Samochód dojechał do: " + cel);
-    }
+        else{
+         
+            }
+        }
+
+
+
 
     public int getWaga() {
         return waga;
