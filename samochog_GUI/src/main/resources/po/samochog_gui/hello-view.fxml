@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.image.ImageView?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml">
+
+    <!-- Lewy panel boczny -->
+    <left>
+        <ScrollPane fitToWidth="true">
+            <VBox spacing="10" style="-fx-padding: 10;">
+
+                <!-- Samochód -->
+                <TitledPane text="Samochód" expanded="true">
+                    <VBox spacing="5">
+                        <Label text="Model"/>
+                        <TextField fx:id="carModel"/>
+                        <Label text="Nr rejestracyjny"/>
+                        <TextField fx:id="carReg"/>
+                        <Label text="Waga"/>
+                        <TextField fx:id="carWeight"/>
+                        <Label text="Prędkość"/>
+                        <TextField fx:id="carSpeed"/>
+                        <HBox spacing="5">
+                            <Button text="Włącz" HBox.hgrow="ALWAYS"/>
+                            <Button text="Wyłącz" HBox.hgrow="ALWAYS"/>
+                            <Button text="Button" HBox.hgrow="ALWAYS"/>
+                        </HBox>
+                    </VBox>
+                </TitledPane>
+
+                <!-- Skrzynia Biegów -->
+                <TitledPane text="Skrzynia Biegów" expanded="true">
+                    <VBox spacing="5">
+                        <Label text="Nazwa"/>
+                        <TextField fx:id="gearboxName"/>
+                        <Label text="Cena"/>
+                        <TextField fx:id="gearboxPrice"/>
+                        <Label text="Waga"/>
+                        <TextField fx:id="gearboxWeight"/>
+                        <Label text="Bieg"/>
+                        <TextField fx:id="gearboxGear"/>
+                        <HBox spacing="5">
+                            <Button text="Zwiększ bieg" HBox.hgrow="ALWAYS"/>
+                            <Button text="Zmniejsz bieg" HBox.hgrow="ALWAYS"/>
+                        </HBox>
+                    </VBox>
+                </TitledPane>
+
+                <!-- Silnik -->
+                <TitledPane text="Silnik" expanded="true">
+                    <VBox spacing="5">
+                        <Label text="Nazwa"/>
+                        <TextField fx:id="engineName"/>
+                        <Label text="Cena"/>
+                        <TextField fx:id="enginePrice"/>
+                        <Label text="Waga"/>
+                        <TextField fx:id="engineWeight"/>
+                        <Label text="Obroty"/>
+                        <TextField fx:id="engineRPM"/>
+                        <HBox spacing="5">
+                            <Button text="Dodaj gaz" HBox.hgrow="ALWAYS"/>
+                            <Button text="Ujmij gaz" HBox.hgrow="ALWAYS"/>
+                        </HBox>
+                    </VBox>
+                </TitledPane>
+
+                <!-- Sprzęgło -->
+                <TitledPane text="Sprzęgło" expanded="true">
+                    <VBox spacing="5">
+                        <Label text="Nazwa"/>
+                        <TextField fx:id="clutchName"/>
+                        <Label text="Cena"/>
+                        <TextField fx:id="clutchPrice"/>
+                        <Label text="Waga"/>
+                        <TextField fx:id="clutchWeight"/>
+                        <Label text="Stan"/>
+                        <TextField fx:id="clutchState"/>
+                        <HBox spacing="5">
+                            <Button text="Naciśnij" HBox.hgrow="ALWAYS"/>
+                            <Button text="Zwolnij" HBox.hgrow="ALWAYS"/>
+                        </HBox>
+                    </VBox>
+                </TitledPane>
+
+            </VBox>
+        </ScrollPane>
+    </left>
+
+    <!-- Główny panel po prawej -->
+    <center>
+        <VBox spacing="10" style="-fx-padding: 10;" VBox.vgrow="ALWAYS">
+            <HBox spacing="10">
+                <ComboBox fx:id="carComboBox" HBox.hgrow="ALWAYS"/>
+                <Button text="Dodaj nowy"/>
+                <Button text="Usuń"/>
+            </HBox>
+            <ImageView preserveRatio="true" VBox.vgrow="ALWAYS"/>
+            <Label text="Mapa"/>
+        </VBox>
+    </center>
+
+</BorderPane>
