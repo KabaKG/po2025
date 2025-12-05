@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.image.ImageView?>
 
-<BorderPane xmlns:fx="http://javafx.com/fxml">
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="po.samochog_gui.HelloController">
 
     <!-- Lewy panel boczny -->
     <left>
@@ -14,7 +14,7 @@
                 <!-- Samochód -->
                 <TitledPane text="Samochód" expanded="true">
                     <VBox spacing="5">
-                        <Label text="Model"/>
+                        <Label text="Model" />
                         <TextField fx:id="carModel"/>
                         <Label text="Nr rejestracyjny"/>
                         <TextField fx:id="carReg"/>
@@ -23,9 +23,9 @@
                         <Label text="Prędkość"/>
                         <TextField fx:id="carSpeed"/>
                         <HBox spacing="5">
-                            <Button text="Włącz" HBox.hgrow="ALWAYS"/>
-                            <Button text="Wyłącz" HBox.hgrow="ALWAYS"/>
-                            <Button text="Button" HBox.hgrow="ALWAYS"/>
+                            <Button fx:id="startButton" text="Włącz" HBox.hgrow="ALWAYS" onAction="#onHelloButtonClick"/>
+                            <Button fx:id="stopButton" text="Wyłącz" HBox.hgrow="ALWAYS"/>
+                            <Button fx:id="buttonButton" text="Button" HBox.hgrow="ALWAYS"/>
                         </HBox>
                     </VBox>
                 </TitledPane>
@@ -42,8 +42,8 @@
                         <Label text="Bieg"/>
                         <TextField fx:id="gearboxGear"/>
                         <HBox spacing="5">
-                            <Button text="Zwiększ bieg" HBox.hgrow="ALWAYS"/>
-                            <Button text="Zmniejsz bieg" HBox.hgrow="ALWAYS"/>
+                            <Button fx:id="upGearButton" text="Zwiększ bieg" HBox.hgrow="ALWAYS"/>
+                            <Button fx:id="downGearButton" text="Zmniejsz bieg" HBox.hgrow="ALWAYS"/>
                         </HBox>
                     </VBox>
                 </TitledPane>
@@ -60,8 +60,8 @@
                         <Label text="Obroty"/>
                         <TextField fx:id="engineRPM"/>
                         <HBox spacing="5">
-                            <Button text="Dodaj gaz" HBox.hgrow="ALWAYS"/>
-                            <Button text="Ujmij gaz" HBox.hgrow="ALWAYS"/>
+                            <Button fx:id="addGazButton" text="Dodaj gaz" HBox.hgrow="ALWAYS"/>
+                            <Button fx:id="subtractGazButton" text="Ujmij gaz" HBox.hgrow="ALWAYS"/>
                         </HBox>
                     </VBox>
                 </TitledPane>
@@ -78,8 +78,8 @@
                         <Label text="Stan"/>
                         <TextField fx:id="clutchState"/>
                         <HBox spacing="5">
-                            <Button text="Naciśnij" HBox.hgrow="ALWAYS"/>
-                            <Button text="Zwolnij" HBox.hgrow="ALWAYS"/>
+                            <Button fx:id="clickButton" text="Naciśnij" HBox.hgrow="ALWAYS"/>
+                            <Button fx:id="unClickButton" text="Zwolnij" HBox.hgrow="ALWAYS"/>
                         </HBox>
                     </VBox>
                 </TitledPane>
@@ -93,8 +93,8 @@
         <VBox spacing="10" style="-fx-padding: 10;" VBox.vgrow="ALWAYS">
             <HBox spacing="10">
                 <ComboBox fx:id="carComboBox" HBox.hgrow="ALWAYS"/>
-                <Button text="Dodaj nowy"/>
-                <Button text="Usuń"/>
+                <Button fx:id="addNewButton" text="Dodaj nowy"/>
+                <Button fx:id="deleteNewButton" text="Usuń"/>
             </HBox>
             <ImageView preserveRatio="true" VBox.vgrow="ALWAYS"/>
             <Label text="Mapa"/>

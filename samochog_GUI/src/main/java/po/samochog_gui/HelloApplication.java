@@ -1,5 +1,6 @@
 package po.samochog_gui;
 
+import symulator.Samochod;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
