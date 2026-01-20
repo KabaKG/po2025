@@ -12,4 +12,9 @@ public class CarData {
     public static void dodajSamochod(Samochod s) {
         listaSamochodow.add(s);
     }
+    public static void usunSamochod(Samochod s) {
+        if (s != null) {
+            listaSamochodow.remove(s);
+        }
+    }
 }

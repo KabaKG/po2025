@@ -1,7 +1,7 @@
 
 package symulator;
 
-public class Samochod {
+public class Samochod extends Thread {
 
     private String model;
     private String nrRejestracyjny;
@@ -14,6 +14,10 @@ public class Samochod {
     private int waga;
     private boolean wlaczony;
     private int predkosc = 0;
+
+    private Pozycja cel;
+    private double mapWidth = 800;
+    private double mapHeight = 600;
 
     public Samochod(String model,String nrRej,Sprzeglo sprzeglo,Silnik silnik, SkrzyniaBiegow skrzynia, Pozycja pozycja1, int waga) {
         this.silnik = silnik;
@@ -63,10 +67,9 @@ public class Samochod {
             return;
         }
 
-        // Uproszczony wzór: Prędkość = (Obroty * Bieg) / Stała_Przełożenia
-        // Przykład: 1. bieg jest wolny, 5. bieg jest szybki
+
         double mnoznikBiegu = 0.02 * bieg;
-        this.predkosc = (int) (silnik.getObroty() * mnoznikBiegu);
+        this.predkosc = (int) ((silnik.getObroty() * mnoznikBiegu))/2;
 
         System.out.println("Aktualna prędkość: " + this.predkosc + " km/h (Bieg: " + bieg + ")");
     }
@@ -88,5 +91,30 @@ public class Samochod {
     public boolean isWlaczony() {
         return wlaczony;
     }
+    @Override
+    public void run() {
+        try {
+            while (!isInterrupted()) {
+                if (wlaczony && pozycja1 != null && cel != null) {
+
+                    aktualizujPredkosc();
+
+                    if (this.predkosc > 0) {
+                        // Teraz tylko jedna linijka!
+                        // moveTo samo zaktualizuje x i y wewnątrz obiektu pozycja1
+                        // oraz samo dopilnuje, żeby nie wyjechać poza 800x600
+                        pozycja1.moveTo((float)this.predkosc, 0.02f, cel);
+                    }
+                }
+                Thread.sleep(20); // 50 klatek na sekundę
+            }
+        } catch (InterruptedException e) {
+            System.out.println("Wątek samochodu " + model + " został zatrzymany.");
+        }
+    }
+    public void setCel(double x, double y) {
+        this.cel = new Pozycja(x, y);
+    }
+
 }
 

@@ -21,20 +21,20 @@ public class NewCarController {
     @FXML
     private void handleCreateCar(ActionEvent event) {
         try {
-            // 1. Walidacja pustych pól
+            // czy są puste
             if (isAnyFieldEmpty()) {
                 showAlert("Błąd formularza", "Wszystkie pola muszą być wypełnione!");
                 return;
             }
 
-            // 2. Walidacja unikalności rejestracji
+            // czy rejestracja sie nie powtarza
             String rej = carReg.getText().trim();
             if (isRegistrationDuplicate(rej)) {
                 showAlert("Błąd danych", "Samochód o rejestracji " + rej + " już istnieje w systemie!");
                 return;
             }
 
-            // --- 3. TWORZENIE KOMPONENTÓW ---
+            // tworzenie komponentow
             Silnik sil = new Silnik();
             sil.setNazwa(engineName.getText());
             sil.setCena(Double.parseDouble(enginePrice.getText()));
@@ -50,7 +50,7 @@ public class NewCarController {
             spr.setCena(Double.parseDouble(clutchPrice.getText()));
             spr.setWaga(parseInteger(clutchWeight.getText()));
 
-            // --- 4. TWORZENIE SAMOCHODU ---
+            // tworzenie calego samochodu
             String model = carModel.getText();
             int wagaAuta = parseInteger(carWeight.getText());
             Pozycja startowa = new Pozycja(100, 100); // Startowa pozycja na mapie
@@ -68,9 +68,8 @@ public class NewCarController {
         }
     }
 
-    /**
-     * Sprawdza, czy którekolwiek z pól TextField jest puste.
-     */
+
+     //Sprawdzenie czy pola są puste
     private boolean isAnyFieldEmpty() {
         List<TextField> fields = Arrays.asList(
                 carModel, carReg, carWeight,
@@ -82,17 +81,17 @@ public class NewCarController {
         return fields.stream().anyMatch(f -> f.getText() == null || f.getText().trim().isEmpty());
     }
 
-    /**
-     * Sprawdza, czy podana rejestracja już istnieje na liście (ignoruje wielkość liter).
-     */
+
+     //Sprawdza, czy podana rejestracja już istnieje na liście
+
     private boolean isRegistrationDuplicate(String newReg) {
         return CarData.getListaSamochodow().stream()
                 .anyMatch(s -> s.getNrRejestracyjny().equalsIgnoreCase(newReg));
     }
 
-    /**
-     * Wyświetla okienko z błędem.
-     */
+
+     // okienko z błędem.
+
     private void showAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(title);

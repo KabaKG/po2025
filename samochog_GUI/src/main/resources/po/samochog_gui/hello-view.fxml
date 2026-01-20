@@ -87,6 +87,7 @@
             <HBox spacing="10">
                 <ComboBox fx:id="carComboBox" HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
                 <Button fx:id="addNewButton" text="Dodaj nowy" onAction="#handleOpenCreator"/>
+                <Button fx:id="deleteOldButton" text="usuń" onAction="#handleDeleteOperation"/>
             </HBox>
 
             <Pane fx:id="mapPane" VBox.vgrow="ALWAYS"

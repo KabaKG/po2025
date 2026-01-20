@@ -7,6 +7,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.TextField;
@@ -16,15 +17,13 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import po.samochog_gui.CarData;
-import symulator.Pozycja;
 import symulator.Samochod;
 
 import java.io.IOException;
 
 public class HelloController {
 
-    @FXML private Pane mapPane;
+
     @FXML private ImageView carIcon;
 
     @FXML private ComboBox<Samochod> carComboBox;
@@ -39,7 +38,7 @@ public class HelloController {
 
     @FXML
     public void initialize() {
-        // 1. Ładowanie ikony - nazwa pliku musi być identyczna jak w resources (carlcon.jfif)
+        //  Ładowanie ikony
         try {
             var resource = getClass().getResourceAsStream("/po/samochog_gui/carIcon.jfif.png");
             if (resource != null) {
@@ -52,7 +51,7 @@ public class HelloController {
             System.out.println("Błąd ładowania obrazka: " + e.getMessage());
         }
 
-        // 2. Obsługa ComboBox
+        //  obsługa ComboBox
         carComboBox.setItems(CarData.getListaSamochodow());
         carComboBox.setCellFactory(lv -> new ListCell<>() {
             @Override
@@ -78,7 +77,7 @@ public class HelloController {
             clearUI();
         }
 
-        // 3. Uruchomienie wątku ruchu
+        //  Uruchomienie wątku
         startMovementThread();
     }
 
@@ -125,14 +124,58 @@ public class HelloController {
             carComboBox.getSelectionModel().selectLast();
         }
     }
+    @FXML
+    private void handleDeleteOperation(ActionEvent event) throws IOException {
+        Samochod wybranySamochod = carComboBox.getSelectionModel().getSelectedItem();
+
+
+        if (wybranySamochod != null) {
+
+            // alert!
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Usuwanie samochodu");
+            alert.setHeaderText("Czy na pewno chcesz usunąć wybrany samochód?");
+            alert.setContentText("Model: " + wybranySamochod.getModel() + "\nRejestracja: " + wybranySamochod.getNrRejestracyjny());
+
+            // ok
+            if (alert.showAndWait().get().getButtonData().isDefaultButton()) {
+
+                CarData.usunSamochod(wybranySamochod);
+                clearCarDetails();
+
+                carIcon.setVisible(false);
+
+                System.out.println("Samochód został usunięty pomyślnie.");
+            }
+        } else {
+            // nie wybrano nic
+            Alert errorAlert = new Alert(Alert.AlertType.WARNING);
+            errorAlert.setTitle("Błąd");
+            errorAlert.setHeaderText(null);
+            errorAlert.setContentText("Najpierw wybierz samochód z listy, aby go usunąć!");
+            errorAlert.showAndWait();
+        }
+    }
+
+
+    private void clearCarDetails() {
+        carModel.clear();
+        carReg.clear();
+        carWeight.clear();
+        carSpeed.clear();
+        engineName.clear();
+        engineRPM.clear();
+        gearboxName.clear();
+        gearboxGear.clear();
+        clutchState.clear();
+        // Dodaj tu inne pola, które masz w widoku
+    }
 
     @FXML
     protected void onHelloButtonClick() {
         Samochod wybrany = carComboBox.getSelectionModel().getSelectedItem();
         if (wybrany != null) {
             wybrany.wlacz();
-            // UWAGA: upewnij się, że masz metodę setPredkosc w klasie Samochod
-            // wybrany.setPredkosc(50); // Testowo, żeby ruszył
             updateUI(wybrany);
         }
     }
@@ -209,73 +252,61 @@ public class HelloController {
 
     @FXML
     private void handleMouseMoved(MouseEvent event) {
-        // Pobieramy aktualną pozycję myszy względem panelu mapy
         mouseX = event.getX();
         mouseY = event.getY();
     }
-
     private void startMovementThread() {
-        Thread moveThread = new Thread(() -> {
+        Thread uiThread = new Thread(() -> {
             try {
                 while (true) {
                     Samochod s = carComboBox.getSelectionModel().getSelectedItem();
 
-                    if (s != null && s.isWlaczony() && s.getPozycja() != null) {
+                    if (s != null && s.getPozycja() != null) {
 
-                        // 1. Obliczamy aktualną prędkość wynikającą z obrotów i biegu
-                        s.aktualizujPredkosc();
-                        double predkosc = s.getPredkosc();
-
-                        // 2. SPRAWDZENIE ODLEGŁOŚCI OD MYSZKI
-                        double dx = mouseX - s.getPozycja().getX();
-                        double dy = mouseY - s.getPozycja().getY();
-                        double odleglosc = Math.sqrt(dx * dx + dy * dy);
-
-                        // Jeśli jesteśmy bardzo blisko myszki (np. 5px), zatrzymujemy auto
-                        if (odleglosc < 5.0) {
-                            predkosc = 0;
+                        if (s.isWlaczony()) {
+                            s.setCel(mouseX, mouseY);
+                            if (s.getState() == Thread.State.NEW) {
+                                s.start();
+                            }
                         }
 
-                        if (predkosc > 0) {
-                            // Zapamiętujemy starą pozycję na wypadek uderzenia w krawędź
-                            double staraX = s.getPozycja().getX();
-                            double staraY = s.getPozycja().getY();
+                        // zmiana grafiki
+                        Platform.runLater(() -> {
 
-                            // Wykonujemy ruch
-                            s.getPozycja().moveTo((float)predkosc, 0.02f, new Pozycja(mouseX, mouseY));
+                            carIcon.setVisible(true);
 
-                            // 3. SPRAWDZENIE KRAWĘDZI MAPY (mapPane)
-                            // Zakładamy, że auto nie może wyjechać poza mapPane
-                            if (s.getPozycja().getX() < 0 || s.getPozycja().getX() > mapPane.getWidth() ||
-                                    s.getPozycja().getY() < 0 || s.getPozycja().getY() > mapPane.getHeight()) {
+                            // sledzenie pozycji
+                            carIcon.setLayoutX(s.getPozycja().getX() - (carIcon.getFitWidth() / 2));
+                            carIcon.setLayoutY(s.getPozycja().getY() - (carIcon.getFitHeight() / 2));
 
-                                // Jeśli przekroczyło krawędź, cofnij do ostatniej dobrej pozycji i zatrzymaj
-                                s.getPozycja().setX(staraX);
-                                s.getPozycja().setY(staraY);
-                                predkosc = 0;
-                            }
-
-                            // 4. Aktualizacja grafiki
-                            final double finalPredkosc = predkosc;
-                            Platform.runLater(() -> {
-                                carIcon.setLayoutX(s.getPozycja().getX() - (carIcon.getFitWidth() / 2));
-                                carIcon.setLayoutY(s.getPozycja().getY() - (carIcon.getFitHeight() / 2));
-
-                                if (finalPredkosc > 0) {
+                            if (s.isWlaczony()) {
+                                // Obrót i
+                                if (s.getPredkosc() > 0) {
                                     double angle = Math.toDegrees(Math.atan2(mouseY - s.getPozycja().getY(), mouseX - s.getPozycja().getX()));
                                     carIcon.setRotate(angle + 90);
                                 }
-                                carSpeed.setText((int)finalPredkosc + " km/h");
-                            });
-                        }
+                                carSpeed.setText(s.getPredkosc() + " km/h");
+                                engineRPM.setText(String.valueOf(s.getSilnik().getObroty()));
+                            } else {
+                                carSpeed.setText("0 km/h");
+                            }
+                        });
                     }
+                    // schowanie ikonki
+                    else {
+
+                        Platform.runLater(() -> carIcon.setVisible(false));
+                    }
+
                     Thread.sleep(20);
                 }
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                System.err.println("Wątek UI przerwany.");
             }
         });
-        moveThread.setDaemon(true);
-        moveThread.start();
+
+        uiThread.setDaemon(true);
+        uiThread.start();
     }
+
 }
