@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane fx:id="rootPane"
+            xmlns="http://javafx.com/javafx/17"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="po.samochog_gui.NewCarController"
+            prefWidth="600"
+            prefHeight="800">
+
+    <top>
+        <VBox alignment="CENTER" style="-fx-background-color: #2c3e50;">
+            <padding><Insets top="15" bottom="15"/></padding>
+            <Label text="Kreator Konfiguracji Samochodu"
+                   style="-fx-text-fill: white; -fx-font-size: 20px; -fx-font-weight: bold;" />
+        </VBox>
+    </top>
+
+    <center>
+        <ScrollPane fitToWidth="true" style="-fx-background: #f5f5f5;">
+            <content>
+                <VBox spacing="15">
+                    <padding><Insets top="20" right="25" bottom="20" left="25" /></padding>
+
+                    <VBox spacing="10" style="-fx-background-color: white; -fx-padding: 15; -fx-border-color: #dcdcdc; -fx-border-radius: 5;">
+                        <Label text="Dane Pojazdu" style="-fx-font-weight: bold; -fx-text-fill: #3498db;"/>
+                        <GridPane hgap="10" vgap="8">
+                            <Label text="Model:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                            <TextField fx:id="carModel" text="Audi A4" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+                            <Label text="Nr rej.:" GridPane.rowIndex="0" GridPane.columnIndex="2"/>
+                            <TextField fx:id="carReg" text="KR12345" GridPane.rowIndex="0" GridPane.columnIndex="3"/>
+
+                            <Label text="Waga:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                            <TextField fx:id="carWeight" text="1500 kg" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+                            <Label text="Prędkość:" GridPane.rowIndex="1" GridPane.columnIndex="2"/>
+                            <TextField fx:id="carSpeed" text="0 km/h" GridPane.rowIndex="1" GridPane.columnIndex="3" disable="true"/>
+                        </GridPane>
+                    </VBox>
+
+                    <VBox spacing="10" style="-fx-background-color: white; -fx-padding: 15; -fx-border-color: #dcdcdc; -fx-border-radius: 5;">
+                        <Label text="Silnik" style="-fx-font-weight: bold; -fx-text-fill: #e67e22;"/>
+                        <GridPane hgap="10" vgap="8">
+                            <Label text="Nazwa:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                            <TextField fx:id="engineName" text="TDI 2.0" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+                            <Label text="Cena:" GridPane.rowIndex="0" GridPane.columnIndex="2"/>
+                            <TextField fx:id="enginePrice" text="7000" GridPane.rowIndex="0" GridPane.columnIndex="3"/>
+
+                            <Label text="Waga:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                            <TextField fx:id="engineWeight" text="200 kg" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+                            <Label text="RPM:" GridPane.rowIndex="1" GridPane.columnIndex="2" />
+                            <TextField fx:id="engineRPM" text="0" GridPane.rowIndex="1" GridPane.columnIndex="3" disable="true"/>
+                        </GridPane>
+                    </VBox>
+
+                    <VBox spacing="10" style="-fx-background-color: white; -fx-padding: 15; -fx-border-color: #dcdcdc; -fx-border-radius: 5;">
+                        <Label text="Skrzynia Biegów" style="-fx-font-weight: bold; -fx-text-fill: #27ae60;"/>
+                        <GridPane hgap="10" vgap="8">
+                            <Label text="Nazwa:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                            <TextField fx:id="gearboxName" text="Manual 6-biegów" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+                            <Label text="Cena:" GridPane.rowIndex="0" GridPane.columnIndex="2"/>
+                            <TextField fx:id="gearboxPrice" text="4500" GridPane.rowIndex="0" GridPane.columnIndex="3"/>
+
+                            <Label text="Waga:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                            <TextField fx:id="gearboxWeight" text="60 kg" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+                            <Label text="Bieg:" GridPane.rowIndex="1" GridPane.columnIndex="2" />
+                            <TextField fx:id="gearboxGear" text="1" GridPane.rowIndex="1" GridPane.columnIndex="3" disable="true"/>
+                        </GridPane>
+                    </VBox>
+
+                    <VBox spacing="10" style="-fx-background-color: white; -fx-padding: 15; -fx-border-color: #dcdcdc; -fx-border-radius: 5;">
+                        <Label text="Sprzęgło" style="-fx-font-weight: bold; -fx-text-fill: #8e44ad;"/>
+                        <GridPane hgap="10" vgap="8">
+                            <Label text="Nazwa:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                            <TextField fx:id="clutchName" text="Standard" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+                            <Label text="Cena:" GridPane.rowIndex="0" GridPane.columnIndex="2"/>
+                            <TextField fx:id="clutchPrice" text="900" GridPane.rowIndex="0" GridPane.columnIndex="3"/>
+
+                            <Label text="Waga:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                            <TextField fx:id="clutchWeight" text="15 kg" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+                            <Label text="Stan:" GridPane.rowIndex="1" GridPane.columnIndex="2"/>
+                            <TextField fx:id="clutchState" text="Wolne" GridPane.rowIndex="1" GridPane.columnIndex="3" disable="true"/>
+                        </GridPane>
+                    </VBox>
+
+                </VBox>
+            </content>
+        </ScrollPane>
+    </center>
+
+    <bottom>
+        <HBox alignment="CENTER" style="-fx-background-color: #e0e0e0;">
+            <padding><Insets top="15" bottom="15" /></padding>
+            <Button fx:id="createButton"
+                    text="STWÓRZ SAMOCHÓD"
+                    prefWidth="300"
+                    onAction="#handleCreateCar"
+                    style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-background-color: #27ae60; -fx-text-fill: white; -fx-cursor: hand;" />
+
+        </HBox>
+    </bottom>
+</BorderPane>

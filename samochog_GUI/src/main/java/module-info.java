@@ -6,4 +6,5 @@ module po.samochog_gui {
     opens po.samochog_gui to javafx.fxml;
     exports po.samochog_gui;
    requires lab5;
+    requires java.desktop;
 }

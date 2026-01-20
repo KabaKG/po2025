@@ -26,8 +26,8 @@ public class Pozycja {
     }
 
     public void moveTo(float predkosc, float vdt, Pozycja cel) {
-        double dx = getX() - cel.getX();
-        double dy = getY() - cel.getY();
+        double dx = cel.getX() - this.x;
+        double dy = cel.getY() - this.y;
         double dxy = Math.sqrt(dx * dx + dy * dy);
         if (dxy == 0) {
             // Już jesteśmy w celu

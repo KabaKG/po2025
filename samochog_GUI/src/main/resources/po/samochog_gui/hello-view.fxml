@@ -6,80 +6,74 @@
 
 <BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="po.samochog_gui.HelloController">
 
-    <!-- Lewy panel boczny -->
     <left>
         <ScrollPane fitToWidth="true">
             <VBox spacing="10" style="-fx-padding: 10;">
 
-                <!-- Samochód -->
                 <TitledPane text="Samochód" expanded="true">
                     <VBox spacing="5">
                         <Label text="Model" />
-                        <TextField fx:id="carModel"/>
+                        <TextField fx:id="carModel" disable="true"/>
                         <Label text="Nr rejestracyjny"/>
-                        <TextField fx:id="carReg"/>
+                        <TextField fx:id="carReg" disable="true"/>
                         <Label text="Waga"/>
-                        <TextField fx:id="carWeight"/>
+                        <TextField fx:id="carWeight" disable="true"/>
                         <Label text="Prędkość"/>
-                        <TextField fx:id="carSpeed"/>
+                        <TextField fx:id="carSpeed" disable="true"/>
                         <HBox spacing="5">
                             <Button fx:id="startButton" text="Włącz" HBox.hgrow="ALWAYS" onAction="#onHelloButtonClick"/>
-                            <Button fx:id="stopButton" text="Wyłącz" HBox.hgrow="ALWAYS"/>
-                            <Button fx:id="buttonButton" text="Button" HBox.hgrow="ALWAYS"/>
+                            <Button fx:id="stopButton" text="Wyłącz" HBox.hgrow="ALWAYS" onAction="#onExitButtonClick"/>
                         </HBox>
                     </VBox>
                 </TitledPane>
 
-                <!-- Skrzynia Biegów -->
                 <TitledPane text="Skrzynia Biegów" expanded="true">
                     <VBox spacing="5">
                         <Label text="Nazwa"/>
-                        <TextField fx:id="gearboxName"/>
+                        <TextField fx:id="gearboxName" disable="true"/>
                         <Label text="Cena"/>
-                        <TextField fx:id="gearboxPrice"/>
+                        <TextField fx:id="gearboxPrice" disable="true"/>
                         <Label text="Waga"/>
-                        <TextField fx:id="gearboxWeight"/>
+                        <TextField fx:id="gearboxWeight" disable="true"/>
                         <Label text="Bieg"/>
-                        <TextField fx:id="gearboxGear"/>
+                        <TextField fx:id="gearboxGear" disable="true"/>
                         <HBox spacing="5">
-                            <Button fx:id="upGearButton" text="Zwiększ bieg" HBox.hgrow="ALWAYS"/>
-                            <Button fx:id="downGearButton" text="Zmniejsz bieg" HBox.hgrow="ALWAYS"/>
+                            <Button fx:id="upGearButton" text="Zwiększ bieg" onAction="#increaseGear" HBox.hgrow="ALWAYS"/>
+                            <Button fx:id="downGearButton" text="Zmniejsz bieg" onAction="#decreaseGear" HBox.hgrow="ALWAYS"/>
                         </HBox>
                     </VBox>
                 </TitledPane>
 
-                <!-- Silnik -->
                 <TitledPane text="Silnik" expanded="true">
                     <VBox spacing="5">
                         <Label text="Nazwa"/>
-                        <TextField fx:id="engineName"/>
+                        <TextField fx:id="engineName" disable="true"/>
                         <Label text="Cena"/>
-                        <TextField fx:id="enginePrice"/>
+                        <TextField fx:id="enginePrice" disable="true"/>
                         <Label text="Waga"/>
-                        <TextField fx:id="engineWeight"/>
+                        <TextField fx:id="engineWeight" disable="true"/>
                         <Label text="Obroty"/>
-                        <TextField fx:id="engineRPM"/>
+                        <TextField fx:id="engineRPM" disable="true"/>
                         <HBox spacing="5">
-                            <Button fx:id="addGazButton" text="Dodaj gaz" HBox.hgrow="ALWAYS"/>
-                            <Button fx:id="subtractGazButton" text="Ujmij gaz" HBox.hgrow="ALWAYS"/>
+                            <Button fx:id="addGazButton" text="Dodaj gaz" onAction="#handleAddGaz" HBox.hgrow="ALWAYS"/>
+                            <Button fx:id="subtractGazButton" text="Ujmij gaz" onAction="#handleSubtractGaz" HBox.hgrow="ALWAYS"/>
                         </HBox>
                     </VBox>
                 </TitledPane>
 
-                <!-- Sprzęgło -->
                 <TitledPane text="Sprzęgło" expanded="true">
                     <VBox spacing="5">
                         <Label text="Nazwa"/>
-                        <TextField fx:id="clutchName"/>
+                        <TextField fx:id="clutchName" disable="true"/>
                         <Label text="Cena"/>
-                        <TextField fx:id="clutchPrice"/>
+                        <TextField fx:id="clutchPrice" disable="true"/>
                         <Label text="Waga"/>
-                        <TextField fx:id="clutchWeight"/>
+                        <TextField fx:id="clutchWeight" disable="true"/>
                         <Label text="Stan"/>
-                        <TextField fx:id="clutchState"/>
+                        <TextField fx:id="clutchState" disable="true"/>
                         <HBox spacing="5">
-                            <Button fx:id="clickButton" text="Naciśnij" HBox.hgrow="ALWAYS"/>
-                            <Button fx:id="unClickButton" text="Zwolnij" HBox.hgrow="ALWAYS"/>
+                            <Button fx:id="clickButton" text="Naciśnij" onAction="#handleClutchClick" HBox.hgrow="ALWAYS"/>
+                            <Button fx:id="unClickButton" text="Zwolnij" onAction="#handleClutchUnclick" HBox.hgrow="ALWAYS"/>
                         </HBox>
                     </VBox>
                 </TitledPane>
@@ -88,16 +82,23 @@
         </ScrollPane>
     </left>
 
-    <!-- Główny panel po prawej -->
     <center>
         <VBox spacing="10" style="-fx-padding: 10;" VBox.vgrow="ALWAYS">
             <HBox spacing="10">
-                <ComboBox fx:id="carComboBox" HBox.hgrow="ALWAYS"/>
-                <Button fx:id="addNewButton" text="Dodaj nowy"/>
-                <Button fx:id="deleteNewButton" text="Usuń"/>
+                <ComboBox fx:id="carComboBox" HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
+                <Button fx:id="addNewButton" text="Dodaj nowy" onAction="#handleOpenCreator"/>
             </HBox>
-            <ImageView preserveRatio="true" VBox.vgrow="ALWAYS"/>
-            <Label text="Mapa"/>
+
+            <Pane fx:id="mapPane" VBox.vgrow="ALWAYS"
+                  style="-fx-background-color: #ecf0f1; -fx-border-color: #bdc3c7;"
+                  onMouseMoved="#handleMouseMoved">
+                <children>
+                    <ImageView fx:id="carIcon" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" />
+                </children>
+            </Pane>
+
+            <Label text="Przesuwaj myszką po szarym polu, aby sterować autem (musi być włączone i mieć prędkość > 0)"
+                   style="-fx-font-size: 10px; -fx-text-fill: #7f8c8d;"/>
         </VBox>
     </center>
 
