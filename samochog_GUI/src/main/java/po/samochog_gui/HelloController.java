@@ -29,7 +29,7 @@ public class HelloController {
     @FXML private ComboBox<Samochod> carComboBox;
 
     @FXML private TextField carModel, carReg, carWeight, carSpeed;
-    @FXML private TextField gearboxName, gearboxPrice, gearboxWeight, gearboxGear;
+    @FXML private TextField gearboxName, gearboxPrice, gearboxWeight, gearboxGear, gearboxmax;
     @FXML private TextField engineName, enginePrice, engineWeight, engineRPM;
     @FXML private TextField clutchName, clutchPrice, clutchWeight, clutchState;
 
@@ -168,7 +168,7 @@ public class HelloController {
         gearboxName.clear();
         gearboxGear.clear();
         clutchState.clear();
-        // Dodaj tu inne pola, które masz w widoku
+        
     }
 
     @FXML
@@ -280,7 +280,7 @@ public class HelloController {
                             carIcon.setLayoutY(s.getPozycja().getY() - (carIcon.getFitHeight() / 2));
 
                             if (s.isWlaczony()) {
-                                // Obrót i
+                                // Obrót
                                 if (s.getPredkosc() > 0) {
                                     double angle = Math.toDegrees(Math.atan2(mouseY - s.getPozycja().getY(), mouseX - s.getPozycja().getX()));
                                     carIcon.setRotate(angle + 90);

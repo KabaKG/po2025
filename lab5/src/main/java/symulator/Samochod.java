@@ -16,8 +16,8 @@ public class Samochod extends Thread {
     private int predkosc = 0;
 
     private Pozycja cel;
-    private double mapWidth = 800;
-    private double mapHeight = 600;
+    private double mapWidth = 2000;
+    private double mapHeight = 1000;
 
     public Samochod(String model,String nrRej,Sprzeglo sprzeglo,Silnik silnik, SkrzyniaBiegow skrzynia, Pozycja pozycja1, int waga) {
         this.silnik = silnik;

@@ -3,8 +3,8 @@ package symulator;
 public class Pozycja {
     private double x;
     private double y;
-    private double maxWidth = 800;
-    private double maxHeight = 600;
+    private double maxWidth = 2000;
+    private double maxHeight = 1200;
     public void setX(double x) {
         this.x = x;
     }
@@ -31,26 +31,49 @@ public class Pozycja {
         double dy = cel.getY() - this.y;
         double dxy = Math.sqrt(dx * dx + dy * dy);
 
-        if (dxy < 1) {
-            // Już jesteśmy w celu
+        double krok = predkosc * vdt;
+
+        if (dxy < krok) {
+            this.x = cel.getX();
+            this.y = cel.getY();
             System.out.println("Jesteśmy już u celu: " + this.x + ", " + this.y);
             return;
         }
 
-        // Obliczamy krok w kierunku celu
-        double dxt = predkosc * vdt * (dx / dxy);
-        double dyt = predkosc * vdt * (dy / dxy);
+
+
+
+        if (krok > dxy) {
+            this.x = cel.getX();
+            this.y = cel.getY();
+            return;
+        }
+
+
+
+        double dxt = krok * (dx / dxy);
+        double dyt = krok * (dy / dxy);
 
         double nextX = this.x + dxt;
         double nextY = this.y + dyt;
 
-        // Aktualizujemy pozycję
-        if (nextX >= 0 && nextX <= maxWidth) {
+        if (nextX < 0) {
+            this.x = 0;
+        } else if (nextX > maxWidth) {
+            this.x = maxWidth;
+        } else {
             this.x = nextX;
         }
-        if (nextY >= 0 && nextY <= maxHeight) {
+
+
+        if (nextY < 0) {
+            this.y = 0;
+        } else if (nextY > maxHeight) {
+            this.y = maxHeight;
+        } else {
             this.y = nextY;
         }
-        System.out.println("Nowa pozycja: " + this.x + ", " + this.y);
+
     }
 }
+

@@ -2,7 +2,7 @@ package symulator;
 
 public class SkrzyniaBiegow extends Komponent {
     private int aktualnyBieg = 0;
-    private int iloscBiegow = 6;
+    private int iloscBiegow = 5;
     private int aktualnePrzelozenie;
 
 
@@ -30,5 +30,9 @@ public class SkrzyniaBiegow extends Komponent {
     }
     public  int  getPrzelozenie(){
         return  aktualnePrzelozenie;
+    }
+
+    public void setIloscBiegow(int iloscBiegow) {
+        this.iloscBiegow = iloscBiegow;
     }
 }

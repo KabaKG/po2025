@@ -63,10 +63,13 @@
                             <Label text="Cena:" GridPane.rowIndex="0" GridPane.columnIndex="2"/>
                             <TextField fx:id="gearboxPrice" text="4500" GridPane.rowIndex="0" GridPane.columnIndex="3"/>
 
+
                             <Label text="Waga:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
                             <TextField fx:id="gearboxWeight" text="60 kg" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
                             <Label text="Bieg:" GridPane.rowIndex="1" GridPane.columnIndex="2" />
                             <TextField fx:id="gearboxGear" text="1" GridPane.rowIndex="1" GridPane.columnIndex="3" disable="true"/>
+
+
                         </GridPane>
                     </VBox>
 

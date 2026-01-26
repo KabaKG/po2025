@@ -1,9 +1,11 @@
 package po.samochog_gui;
 
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import symulator.*;
@@ -17,6 +19,10 @@ public class NewCarController {
     @FXML private TextField engineName, enginePrice, engineWeight;
     @FXML private TextField gearboxName, gearboxPrice, gearboxWeight;
     @FXML private TextField clutchName, clutchPrice, clutchWeight;
+    @FXML private ComboBox<Integer> maxGearsCombo;
+
+
+
 
     @FXML
     private void handleCreateCar(ActionEvent event) {
@@ -35,6 +41,8 @@ public class NewCarController {
             }
 
             // tworzenie komponentow
+            //int maxGears = maxGearsCombo.getValue();
+
             Silnik sil = new Silnik();
             sil.setNazwa(engineName.getText());
             sil.setCena(Double.parseDouble(enginePrice.getText()));
@@ -44,6 +52,7 @@ public class NewCarController {
             sk.setNazwa(gearboxName.getText());
             sk.setCena(Double.parseDouble(gearboxPrice.getText()));
             sk.setWaga(parseInteger(gearboxWeight.getText()));
+           //sk.setIloscBiegow(maxGears);
 
             Sprzeglo spr = new Sprzeglo();
             spr.setNazwa(clutchName.getText());
@@ -57,7 +66,7 @@ public class NewCarController {
 
             Samochod auto = new Samochod(model, rej, spr, sil, sk, startowa, wagaAuta);
 
-            // --- 5. FINALIZACJA ---
+            
             CarData.dodajSamochod(auto);
 
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -104,4 +113,12 @@ public class NewCarController {
         String cleaned = text.replaceAll("[^0-9]", "");
         return cleaned.isEmpty() ? 0 : Integer.parseInt(cleaned);
     }
+
+
+
+
+
+
 }
+
+

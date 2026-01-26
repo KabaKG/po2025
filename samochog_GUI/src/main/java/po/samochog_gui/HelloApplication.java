@@ -13,7 +13,7 @@ public class HelloApplication extends Application {
 
     @Override
     public void start(Stage primaryStage) throws IOException {
-        // 1. Tworzymy OSOBNE okno (Stage) dla kreatora
+
         Stage creatorStage = new Stage();
 
         FXMLLoader creatorLoader = new FXMLLoader(HelloApplication.class.getResource("Car-Creator.fxml"));
@@ -23,11 +23,10 @@ public class HelloApplication extends Application {
         creatorStage.setScene(new Scene(creatorRoot));
         creatorStage.setMaximized(true);
 
-        // 2. Teraz showAndWait() zadziała, bo creatorStage nie jest oknem głównym (primary)
-        // Program zatrzyma się tutaj, dopóki nie zamkniesz okna kreatora
+
         creatorStage.showAndWait();
 
-        // 3. Po zamknięciu kreatora, otwieramy właściwe okno główne (primaryStage)
+
         FXMLLoader mainLoader = new FXMLLoader(HelloApplication.class.getResource("hello-view.fxml"));
         Parent mainRoot = mainLoader.load();
 
